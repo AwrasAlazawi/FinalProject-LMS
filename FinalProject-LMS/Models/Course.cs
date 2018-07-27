@@ -8,8 +8,8 @@ namespace FinalProject_LMS.Models
 {
     public class Course
     {
-        [Key]
-        public string Id { get; set; }
+        
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100)]

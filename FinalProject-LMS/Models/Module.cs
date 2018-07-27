@@ -8,8 +8,8 @@ namespace FinalProject_LMS.Models
 {
     public class Module
     {
-        [Key]
-        public string Id { get; set; }
+   
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -30,7 +30,7 @@ namespace FinalProject_LMS.Models
 
         public Course Course { get; set; }
 
-        public string CourseId { get; set; }
+        public int CourseId { get; set; }
 
 
 

@@ -13,7 +13,6 @@ namespace FinalProject_LMS.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "FinalProject_LMS.Models.ApplicationDbContext";
         }
 
         protected override void Seed(FinalProject_LMS.Models.ApplicationDbContext context)
@@ -68,4 +67,5 @@ namespace FinalProject_LMS.Migrations
 
         }
     }
+    
 }
