@@ -37,9 +37,11 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Activities/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name");
+            var data = db.Modules.Where(m => m.Id == id).ToList();
+            ViewBag.ModuleId = new SelectList(data, "Id", "Name");
+
             ViewBag.TypeId = new SelectList(db.ActivityTypes, "Id", "Name");
             return View();
         }
