@@ -4,7 +4,6 @@ namespace FinalProject_LMS.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -13,7 +12,6 @@ namespace FinalProject_LMS.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "FinalProject_LMS.Models.ApplicationDbContext";
         }
 
         protected override void Seed(FinalProject_LMS.Models.ApplicationDbContext context)
@@ -65,7 +63,6 @@ namespace FinalProject_LMS.Migrations
 
             var john = userManager.FindByName("student1@lexicon.se");
             userManager.AddToRoles(john.Id, "Student");
-
         }
     }
 }

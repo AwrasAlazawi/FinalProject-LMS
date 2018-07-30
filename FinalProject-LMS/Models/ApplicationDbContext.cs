@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace FinalProject_LMS.Models
 {
-   
-        public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-        {
-        public DbSet<Course> Courses  { get; set; }
+
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public DbSet<Course> Courses { get; set; }
 
         public DbSet<Module> Modules { get; set; }
 
@@ -21,16 +17,14 @@ namespace FinalProject_LMS.Models
 
         public ApplicationDbContext()
                 : base("DefaultConnection", throwIfV1Schema: false)
-            {
-            }
+        {
+        }
 
-            public static ApplicationDbContext Create()
-            {
-                return new ApplicationDbContext();
-            }
-
-
+        public static ApplicationDbContext Create()
+        {
+            return new ApplicationDbContext();
+        }
     }
+}
 
-
-    }
+        

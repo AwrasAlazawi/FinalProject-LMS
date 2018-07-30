@@ -1,9 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FinalProject_LMS.Models
 {
@@ -19,7 +18,7 @@ namespace FinalProject_LMS.Models
         public Course Course { get; set; }
 
         
-        public string CourseId { get; set; }
+        public int? CourseId { get; set; }
 
 
 

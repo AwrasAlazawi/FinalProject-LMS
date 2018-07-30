@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace FinalProject_LMS.Models
 {
     public class Activity
     {
-        [Key]
-        public string Id { get; set; }
+      
+        public int Id { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -18,12 +15,12 @@ namespace FinalProject_LMS.Models
         public ActivityType Type { get; set; }
         
         [Required]
-        public string TypeId { get; set; }
+        public int TypeId { get; set; }
 
         public Module Module { get; set; }
 
         [Required]
-        public string ModuleId { get; set; }
+        public int ModuleId { get; set; }
 
         [Required]
         [DataType(DataType.Time)]
