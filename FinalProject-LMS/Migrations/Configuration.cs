@@ -67,5 +67,4 @@ namespace FinalProject_LMS.Migrations
 
         }
     }
-    
 }
