@@ -1,9 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace FinalProject_LMS.Models
 {
@@ -28,9 +24,7 @@ namespace FinalProject_LMS.Models
         {
             return new ApplicationDbContext();
         }
-
-        // public System.Data.Entity.DbSet<FinalProject_LMS.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
-
-
 }
+
+        

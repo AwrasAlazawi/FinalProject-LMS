@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using FinalProject_LMS.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using FinalProject_LMS.Models;
 
-namespace FinalProject_LMS.Controllers
+namespace FinalProject_LMS.Migrations
 {
     public class CoursesController : Controller
     {
@@ -19,21 +15,15 @@ namespace FinalProject_LMS.Controllers
         {
             return View(db.Courses.ToList());
         }
-
-        // GET: Courses/Details/5
+        
+        //GET: Courses/Details/5
         public ActionResult CourseModule(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IEnumerable<Module> modules = db.Modules.Where(m => m.CourseId == id).ToList();
-            if (modules == null)
-            {
-                return HttpNotFound();
-            }
-            return View(modules);
+
+            var module = db.Modules.Where(g => g.CourseId == id);
+            return View(module);
         }
+    
 
         // GET: Courses/Create
         public ActionResult Create()

@@ -8,7 +8,7 @@ namespace FinalProject_LMS.Models
 {
     public class Course
     {
-        
+      
         public int Id { get; set; }
 
         [Required]
