@@ -20,7 +20,7 @@ namespace FinalProject_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
-        {
+        { 
         }
 
        
