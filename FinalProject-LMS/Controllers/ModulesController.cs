@@ -1,4 +1,7 @@
 ﻿using FinalProject_LMS.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -11,33 +14,50 @@ namespace FinalProject_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var modules = db.Modules.Include(m => m.Course);
-            return View(modules.ToList());
-        }
+            if (id != null)
+            {
+                var modules = db.Modules.Where(m => m.CourseId == id);
+                return View(modules.ToList());
+            }
 
-        // GET: Modules/Details/5
-        public ActionResult Details(int? id)
+            return View(db.Modules.ToList());
+        }
+        public ActionResult ModuleActivity(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Module module = db.Modules.Find(id);
-            if (module == null)
+            IEnumerable<Activity> activities = db.Activities.Where(a => a.ModuleId == id).ToList();
+            if (activities == null)
             {
                 return HttpNotFound();
             }
-            return View(module);
+            return View(activities);
+
         }
+
+        // GET: Modules/Details/5
+
 
         // GET: Modules/Create
         public ActionResult Create(int? id)
         {
-            var data = db.Courses.Where(x => x.Id == id);
+            // ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
+
+            var data = db.Courses.Where(c => c.Id == id).ToList();
+            Course d = db.Courses.Single(c => c.Id == id);
             ViewBag.CourseId = new SelectList(data, "Id", "Name");
-            return View();
+
+            Module model = new Module
+            {
+                StartDate = d.StartDate,
+                EndDate = DateTime.Now
+
+            };
+            return View(model);
         }
 
         // POST: Modules/Create
@@ -47,12 +67,12 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate,EndDate,CourseId")] Module module)
         {
-        
             if (ModelState.IsValid)
             {
                 db.Modules.Add(module);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", new { id = module.CourseId });
             }
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);

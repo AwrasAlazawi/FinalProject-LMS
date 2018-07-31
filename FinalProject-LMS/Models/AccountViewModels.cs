@@ -68,6 +68,11 @@ namespace FinalProject_LMS.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Member Name")]
+        public string Name { get; set; }
+
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -79,6 +84,13 @@ namespace FinalProject_LMS.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public Course Course { get; set; }
+
+
+        public int? CourseId { get; set; }
+
+        //To determine the Role if it is a Teacher or a Student
+        public int? Kind { get; set; }
     }
 
     public class ResetPasswordViewModel

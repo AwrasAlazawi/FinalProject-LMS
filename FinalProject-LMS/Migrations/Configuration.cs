@@ -19,7 +19,7 @@ namespace FinalProject_LMS.Migrations
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new ApplicationUserManager(userStore);
 
-            var emails = new[] { "teacher1@lexicon.se", "teacher2@lexicon.se", "student1@lexicon.se"  };
+            var emails = new[] { "teacher1@lexicon.se", "teacher2@lexicon.se", "student1@lexicon.se" };
 
             foreach (var email in emails)
             {
@@ -63,6 +63,7 @@ namespace FinalProject_LMS.Migrations
 
             var john = userManager.FindByName("student1@lexicon.se");
             userManager.AddToRoles(john.Id, "Student");
+
         }
     }
 }
