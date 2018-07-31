@@ -16,7 +16,8 @@ namespace FinalProject_LMS.Migrations
             return View(db.Courses.ToList());
         }
         
-        //GET: Courses/Details/5
+
+        //GET: Courses/Module/5
         public ActionResult CourseModule(int? id)
         {
 
