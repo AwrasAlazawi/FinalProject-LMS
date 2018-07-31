@@ -11,11 +11,13 @@ namespace FinalProject_LMS.Migrations
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
+        [Authorize]
         public ActionResult AllCourses()
         {
             return View(db.Courses.ToList());
         }
-        
+
+        [Authorize]
         //GET: Courses/Details/5
         public ActionResult CourseModule(int? id)
         {
@@ -23,17 +25,21 @@ namespace FinalProject_LMS.Migrations
             var module = db.Modules.Where(g => g.CourseId == id);
             return View(module);
         }
-    
 
+
+        [Authorize(Roles ="Teacher")]
         // GET: Courses/Create
         public ActionResult Create()
         {
-            return View();
+            return RedirectToAction("AllCourses");
         }
+
+
 
         // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
@@ -42,13 +48,15 @@ namespace FinalProject_LMS.Migrations
             {
                 db.Courses.Add(course);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AllCourses");
             }
 
             return View(course);
         }
 
         // GET: Courses/Edit/5
+
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -68,18 +76,20 @@ namespace FinalProject_LMS.Migrations
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AllCourses");
             }
             return View(course);
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -28,7 +28,7 @@ namespace FinalProject_LMS.Controllers
                 else if (k == 1)
                     userManager.AddToRole(id, "Teacher");
                 else
-                    return View();
+                    return RedirectToAction("AllCourses", "Courses" );
 
                 //if (User.IsInRole("Teacher"))
                 //     return View();
@@ -39,7 +39,7 @@ namespace FinalProject_LMS.Controllers
 
 
 
-            return View();
+            return RedirectToAction("AllCourses", "Courses");
 
 
         }
