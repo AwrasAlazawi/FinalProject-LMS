@@ -11,7 +11,7 @@ namespace FinalProject_LMS.Migrations
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Courses
-        public ActionResult Index()
+        public ActionResult AllCourses()
         {
             return View(db.Courses.ToList());
         }
