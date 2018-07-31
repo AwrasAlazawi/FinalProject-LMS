@@ -1,18 +1,16 @@
 ﻿using FinalProject_LMS.Models;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace FinalProject_LMS.ViewModels
 {
     public class AllStudentsView
     {
-      
-        [Display(Name = "Member Name")]
         public string Name { get; set; }
+        public string Email { get; set; }
 
-      
+        public List<ApplicationUser> students = new List<ApplicationUser>();
+        public string CourseName { get; set; }
 
-
-        public int? CourseId { get; set; }
 
     }
 }

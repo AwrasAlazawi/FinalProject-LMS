@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FinalProject_LMS.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using FinalProject_LMS.ViewModels;
+using System.Collections.Generic;
 
 namespace FinalProject_LMS.Controllers
 {
@@ -24,10 +26,37 @@ namespace FinalProject_LMS.Controllers
         {
         }
 
+
+
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        public ActionResult AllStudents()
+        {
+            List<AllStudentsView> studentsList = new List<AllStudentsView>();
+            foreach (var s in db.Users.Where(u => u.CourseId != null).ToList())
+            {
+                var Course = db.Courses.Single(c => c.Id == s.CourseId);
+                studentsList.Add(new AllStudentsView()
+                {
+                    Name = s.Name,
+                    Email = s.Email,
+                    CourseName = Course.Name
+
+
+                }
+                    );
+
+            }
+
+
+
+
+            return View(studentsList);
+
         }
 
         public ApplicationSignInManager SignInManager
