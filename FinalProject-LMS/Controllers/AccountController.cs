@@ -1,9 +1,10 @@
 ﻿using FinalProject_LMS.Models;
+using FinalProject_LMS.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using System.Data.Entity;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,18 +23,29 @@ namespace FinalProject_LMS.Controllers
         {
         }
 
+       
         public ActionResult AllStudents()
         {
-
-            var students = db.Users.Where(u => u.CourseId != null);
-            if (students == null)
+            List<AllStudentsView> studentsList = new List<AllStudentsView>();
+            foreach (var s in db.Users.Where(u => u.CourseId !=null).ToList())
             {
-                return HttpNotFound();
-            }
-           
-         
+                var Course = db.Courses.Single(c => c.Id == s.CourseId);
+                studentsList.Add(new AllStudentsView()
+                {
+                    Name = s.Name,
+                    Email = s.Email,
+                    CourseName = Course.Name
+                    
 
-            return View(students);
+                }
+                    );
+                    
+            }
+
+
+            
+           
+            return View(studentsList);
 
         }
 
@@ -63,7 +75,7 @@ namespace FinalProject_LMS.Controllers
             }
             private set
             {
-                _userManager = value;
+                _userManager = value; 
             }
         }
 
