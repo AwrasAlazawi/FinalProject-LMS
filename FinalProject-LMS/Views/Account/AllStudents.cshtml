@@ -10,11 +10,11 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<div class="navbar-left" style="margin-top:8px;">
-    @using (Html.BeginForm("AllStudents", "Account", FormMethod.Get, new { @id = "id"}))
+<div class="navbar-right" style="margin-top:8px; margin-right:50px">
+    @using (Html.BeginForm("AllStudents", "Account", FormMethod.Get))
     {
         <ul class="nav navbar-nav">
-            <li>@Html.TextBox("id", ViewBag.CurrentFilter as string)</li>
+            <li>@Html.TextBox("searchName")</li>
             <li><input type="submit" value="Search" /></li>
         </ul>
     }

@@ -24,11 +24,11 @@ namespace FinalProject_LMS.Controllers
         }
 
        
-        public ActionResult AllStudents()
+        public ActionResult AllStudents(string searchName)
         {
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
             string name = ViewBag.CurrentFilter;
-            if(name == null)
+            if(searchName == null)
             {
               
                 foreach (var s in db.Users.Where(u => u.CourseId != null).ToList())
@@ -50,7 +50,7 @@ namespace FinalProject_LMS.Controllers
             else
             {
              
-                foreach (var s in db.Users.Where(u => u.CourseId != null).Where(u => u.Name == "ravi").ToList())
+                foreach (var s in db.Users.Where(u => u.CourseId != null).Where(u => u.Name.Contains(searchName)).ToList())
                 {
                     var Course = db.Courses.Single(c => c.Id == s.CourseId);
                     studentsList.Add(new AllStudentsView()
