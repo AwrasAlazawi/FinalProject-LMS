@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject_LMS.Models.Course>
+﻿@model IEnumerable<FinalProject_LMS.ViewModels.AllCoursesViewModels>
 @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "AllCourses";
@@ -25,38 +25,43 @@
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
-        <th></th>
+        @if (User.IsInRole("Teacher"))
+        {
+        <th> @Html.DisplayNameFor(model => model.count)</th>}
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            @if (User.IsInRole("Teacher"))
-            {
-                <td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        @if (User.IsInRole("Teacher"))
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.count)
+        </td>
+        <td>
 
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Module", "CourseModule", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            }
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Module", "CourseModule", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+}
 
-            else
-            {
-                <td>
-                    @Html.ActionLink("Module", "CourseModule", new { id = item.Id })
-                </td>
-            }
-        </tr>
+else
+{
+    <td>
+        @Html.ActionLink("Module", "CourseModule", new { id = item.Id })
+    </td>
+}
+    </tr>
     }
 
 </table>

@@ -1,4 +1,5 @@
 ﻿using FinalProject_LMS.Models;
+using FinalProject_LMS.ViewModels;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -10,11 +11,25 @@ namespace FinalProject_LMS.Migrations
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        //
+       
         // GET: Courses
         [Authorize]
         public ActionResult AllCourses()
         {
-            return View(db.Courses.ToList());
+            var x = db.Users.Include("Course").Where(u => u.CourseId != null).GroupBy(u => u.CourseId)
+           .Select(y => new AllCoursesViewModels
+           {
+               Name = y.FirstOrDefault().Course.Name,
+               Description = y.FirstOrDefault().Course.Description,
+               StartDate = y.FirstOrDefault().Course.StartDate,
+               count = y.Count(),
+               }).ToList();
+
+            return View(x);
+          //  var coursesList = ;
+           // return View(db.Courses.ToList(), x);
         }
 
         [Authorize]
