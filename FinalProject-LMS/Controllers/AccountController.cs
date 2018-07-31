@@ -1,13 +1,15 @@
-﻿using FinalProject_LMS.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System.Data.Entity;
+﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using FinalProject_LMS.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FinalProject_LMS.Controllers
 {
@@ -20,21 +22,6 @@ namespace FinalProject_LMS.Controllers
 
         public AccountController()
         {
-        }
-
-        public ActionResult AllStudents()
-        {
-
-            var students = db.Users.Where(u => u.CourseId != null);
-            if (students == null)
-            {
-                return HttpNotFound();
-            }
-           
-         
-
-            return View(students);
-
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)

@@ -9,7 +9,6 @@ namespace FinalProject_LMS
         {
             bundles.Add(new ScriptBundle("~/bundles/datevalidations").Include(
                        "~/Scripts/DateValidations.js"));
-           
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 

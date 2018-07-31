@@ -15,9 +15,13 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
+        <ul class="nav navbar-nav navbar-right" >
+            <li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+          
+            
+   
+
+        </ul>
 }
