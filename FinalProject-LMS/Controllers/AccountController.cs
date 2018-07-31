@@ -75,7 +75,7 @@ namespace FinalProject_LMS.Controllers
             }
             private set
             {
-                _userManager = value;
+                _userManager = value; 
             }
         }
 
