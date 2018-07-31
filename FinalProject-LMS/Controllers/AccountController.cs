@@ -27,20 +27,46 @@ namespace FinalProject_LMS.Controllers
         public ActionResult AllStudents()
         {
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
-            foreach (var s in db.Users.Where(u => u.CourseId !=null).ToList())
+            string name = ViewBag.CurrentFilter;
+            if(name == null)
             {
-                var Course = db.Courses.Single(c => c.Id == s.CourseId);
-                studentsList.Add(new AllStudentsView()
+              
+                foreach (var s in db.Users.Where(u => u.CourseId != null).ToList())
                 {
-                    Name = s.Name,
-                    Email = s.Email,
-                    CourseName = Course.Name
-                    
+                    var Course = db.Courses.Single(c => c.Id == s.CourseId);
+                    studentsList.Add(new AllStudentsView()
+                    {
+                        Name = s.Name,
+                        Email = s.Email,
+                        CourseName = Course.Name
+
+
+                    }
+                        );
 
                 }
-                    );
-                    
+
             }
+            else
+            {
+             
+                foreach (var s in db.Users.Where(u => u.CourseId != null).Where(u => u.Name == "ravi").ToList())
+                {
+                    var Course = db.Courses.Single(c => c.Id == s.CourseId);
+                    studentsList.Add(new AllStudentsView()
+                    {
+                        Name = s.Name,
+                        Email = s.Email,
+                        CourseName = Course.Name
+
+
+                    }
+                        );
+
+                }
+
+            }
+           
 
 
             
