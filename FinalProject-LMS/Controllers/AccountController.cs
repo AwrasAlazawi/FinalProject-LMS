@@ -47,7 +47,7 @@ namespace FinalProject_LMS.Controllers
                 }
 
             }
-            else
+            else 
             {
              
                 foreach (var s in db.Users.Where(u => u.CourseId != null).Where(u => u.Name.Contains(searchName)).ToList())
