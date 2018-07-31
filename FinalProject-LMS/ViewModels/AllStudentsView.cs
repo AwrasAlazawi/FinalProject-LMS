@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinalProject_LMS.ViewModels
 {
-    public class AllStudentsView
+    public class AllStudentsView 
     {
         public string Name { get; set; }
         public string Email { get; set; }

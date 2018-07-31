@@ -1,17 +1,14 @@
-﻿using System;
-using System.Globalization;
+﻿using FinalProject_LMS.Models;
+using FinalProject_LMS.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using FinalProject_LMS.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using FinalProject_LMS.ViewModels;
-using System.Collections.Generic;
 
 namespace FinalProject_LMS.Controllers
 {
@@ -23,21 +20,14 @@ namespace FinalProject_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
-        {
+        { 
         }
 
-
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
+       
         public ActionResult AllStudents()
         {
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
-            foreach (var s in db.Users.Where(u => u.CourseId != null).ToList())
+            foreach (var s in db.Users.Where(u => u.CourseId !=null).ToList())
             {
                 var Course = db.Courses.Single(c => c.Id == s.CourseId);
                 studentsList.Add(new AllStudentsView()
@@ -45,18 +35,24 @@ namespace FinalProject_LMS.Controllers
                     Name = s.Name,
                     Email = s.Email,
                     CourseName = Course.Name
-
+                    
 
                 }
                     );
-
+                    
             }
 
 
-
-
+            
+           
             return View(studentsList);
 
+        }
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
         }
 
         public ApplicationSignInManager SignInManager
@@ -79,7 +75,7 @@ namespace FinalProject_LMS.Controllers
             }
             private set
             {
-                _userManager = value;
+                _userManager = value; 
             }
         }
 
@@ -91,7 +87,7 @@ namespace FinalProject_LMS.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+        //
         //
         // POST: /Account/Login
         [HttpPost]
