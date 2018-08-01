@@ -1,6 +1,12 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-size: 18px;
+    font-family: "Times New Roman", Times, serif;
+    color: blueviolet;
+    background-color: aliceblue;
+    font-weight: bold;
+    
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,3 +28,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.navbar-inverse {
+    background-color: #4682B4;
+    border-color: #00FFFF;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #000000;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #000000;
+    }
+ 
+    .logo{
+       width:150px;
+    }
+
+.
