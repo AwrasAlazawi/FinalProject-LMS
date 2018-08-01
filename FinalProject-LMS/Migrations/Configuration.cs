@@ -37,7 +37,7 @@ namespace FinalProject_LMS.Migrations
                     throw new Exception(string.Join("\n", result.Errors));
                 }
             }
-
+          
 
             var roleStore = new RoleStore<IdentityRole>(context);
             var roleManager = new RoleManager<IdentityRole>(roleStore);

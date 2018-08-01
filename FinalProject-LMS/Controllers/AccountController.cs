@@ -167,7 +167,9 @@ namespace FinalProject_LMS.Controllers
         [AllowAnonymous]
         public ActionResult Register(int? k)
         {
-
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             RegisterViewModel model = new RegisterViewModel

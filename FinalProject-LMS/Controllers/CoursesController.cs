@@ -1,4 +1,5 @@
 ﻿using FinalProject_LMS.Models;
+using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,9 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses
         public ActionResult Index()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
             return View(db.Courses.ToList());
         }
         
@@ -20,7 +24,9 @@ namespace FinalProject_LMS.Migrations
         //GET: Courses/Module/5
         public ActionResult CourseModule(int? id)
         {
-
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
             var module = db.Modules.Where(g => g.CourseId == id);
             return View(module);
         }
@@ -29,6 +35,9 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses/Create
         public ActionResult Create()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
             return View();
         }
 
@@ -39,6 +48,10 @@ namespace FinalProject_LMS.Migrations
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -52,6 +65,9 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses/Edit/5
         public ActionResult Edit(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -71,6 +87,10 @@ namespace FinalProject_LMS.Migrations
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;

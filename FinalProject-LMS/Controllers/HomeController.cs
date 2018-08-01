@@ -1,6 +1,7 @@
 ﻿using FinalProject_LMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace FinalProject_LMS.Controllers
@@ -18,9 +19,10 @@ namespace FinalProject_LMS.Controllers
                 var userManager = new ApplicationUserManager(userStore);
                 if (id != null)
                 {
-                
-                var userId = User.Identity.GetUserId();
-                    if (k == 2)
+                var UserId = User.Identity.GetUserId();
+                var user = db.Users.Single(u => u.Id == UserId);
+                ViewBag.UserName = user.Name;
+                if (k == 2)
                         userManager.AddToRole(id, "Student");
                     else if (k == 1)
                         userManager.AddToRole(id, "Teacher");
