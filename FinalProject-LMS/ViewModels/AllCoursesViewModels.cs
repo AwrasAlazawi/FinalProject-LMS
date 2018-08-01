@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FinalProject_LMS.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,6 +25,12 @@ namespace FinalProject_LMS.ViewModels
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Count of Students")]
-        public int count { get; set; }
+        public int? count { get; set; }
+
+        public List<Course> CoursesList { get; set; }
+
+       
+
+     
     }
 }

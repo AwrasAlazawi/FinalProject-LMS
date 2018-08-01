@@ -1,5 +1,6 @@
 ﻿using FinalProject_LMS.Models;
 using FinalProject_LMS.ViewModels;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,26 +14,64 @@ namespace FinalProject_LMS.Migrations
 
 
         //
-       
+
         // GET: Courses
         [Authorize]
         public ActionResult AllCourses()
         {
             var x = db.Users.Include("Course").Where(u => u.CourseId != null).GroupBy(u => u.CourseId)
-           .Select(y => new AllCoursesViewModels
-           {
-               Name = y.FirstOrDefault().Course.Name,
-               Description = y.FirstOrDefault().Course.Description,
-               StartDate = y.FirstOrDefault().Course.StartDate,
-               count = y.Count(),
-               }).ToList();
+             .Select(y => new AllCoursesViewModels
+             {
+                 Id = y.FirstOrDefault().Course.Id,
+                 Name = y.FirstOrDefault().Course.Name,
+                 Description = y.FirstOrDefault().Course.Description,
+                 StartDate = y.FirstOrDefault().Course.StartDate,
+                 count = y.Count(),
+             }).ToList();
 
-            return View(x);
-          //  var coursesList = ;
-           // return View(db.Courses.ToList(), x);
+            if (x.Count() == 0)
+            {
+               List<AllCoursesViewModels> coursesList = new List<AllCoursesViewModels>();
+                foreach (var c in db.Courses.ToList())
+                {
+                    coursesList.Add(new AllCoursesViewModels()
+                    {
+                        Name = c.Name,
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        count = 0,
+                    });
+
+                }
+                return View(coursesList);
+            }
+            else
+            {
+                return View(x);
+            }
+
+            return View();
         }
 
-        [Authorize]
+
+        //List<Course> courses = new List<Course>();
+        //foreach (var c in db.Courses.ToList())
+        //{
+        //    courses.Add(new Course()
+        //    {
+        //        Id = c.Id,
+        //        Name = c.Name,
+        //        Description = c.Description,
+        //        StartDate = c.StartDate
+        //     });
+
+        //    AllCoursesViewModels model = new AllCoursesViewModels();
+        //    model.CoursesList = courses;
+
+
+   
+
+    [Authorize]
         //GET: Courses/Details/5
         public ActionResult CourseModule(int? id)
         {
@@ -46,7 +85,7 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses/Create
         public ActionResult Create()
         {
-            return RedirectToAction("AllCourses");
+            return View();
         }
 
 
