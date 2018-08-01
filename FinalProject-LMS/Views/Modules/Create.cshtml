@@ -14,7 +14,7 @@
     <div class="form-horizontal">
         <h4>Module</h4>
         <hr />
-        <span id="DateError" class="alert alert-danger hidden">The Date Is Not Correct</span>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -38,7 +38,9 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                <span id="warningTextForCourseStartDate" class="text-danger hidden">It is not allowed to add a module befor Course Start Date</span>
             </div>
+          
         </div>
 
         <div class="form-group">
@@ -46,6 +48,7 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                <span id="warningText" class="text-danger hidden">The two dates are Not Correct</span>
             </div>
         </div>
 
@@ -59,7 +62,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="CreateButton" type="submit" value="Create" class="btn btn-default"/>
+               
+                
             </div>
         </div>
     </div>

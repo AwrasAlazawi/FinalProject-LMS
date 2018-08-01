@@ -1,4 +1,5 @@
 ﻿using FinalProject_LMS.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -22,6 +23,8 @@ namespace FinalProject_LMS.Migrations
         {
 
             var module = db.Modules.Where(g => g.CourseId == id);
+            var Course = db.Courses.Single(c => c.Id == id);
+            ViewBag.CourseName = Course.Name;
             return View(module);
         }
     
@@ -47,6 +50,18 @@ namespace FinalProject_LMS.Migrations
             }
 
             return View(course);
+        }
+
+        public JsonResult UniqueCourseName(string DataName, string text)
+        {
+            if (DataName == "Name")
+            {
+                var data = db.Courses.Where(c => c.Name.Equals(text.Trim(), StringComparison.InvariantCultureIgnoreCase)).Select(c => new { text = c.Name }).ToList();
+                if (data != null)
+                    return Json(data);
+            }
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return null;
         }
 
         // GET: Courses/Edit/5

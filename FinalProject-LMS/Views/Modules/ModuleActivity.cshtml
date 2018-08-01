@@ -4,16 +4,17 @@
     ViewBag.Title = "ModuleActivity";
 }
 
-<h2>ModuleActivity</h2>
+<h2> @Html.Raw(ViewBag.ModuleName) </h2>
+
 
 <p>
     @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
 </p>
 <table class="table">
     <tr>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Module.Name)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Type.Name)
         </th>
@@ -32,9 +33,9 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Module.Name)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.Type.Name)
             </td>
