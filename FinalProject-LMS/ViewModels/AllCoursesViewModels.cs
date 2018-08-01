@@ -28,9 +28,10 @@ namespace FinalProject_LMS.ViewModels
         public int? count { get; set; }
 
         public List<Course> CoursesList { get; set; }
+        public List<ApplicationUser> Users { get; set; }
 
-       
 
-     
+
+
     }
 }

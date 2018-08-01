@@ -19,54 +19,35 @@ namespace FinalProject_LMS.Migrations
         [Authorize]
         public ActionResult AllCourses()
         {
-            var x = db.Users.Include("Course").Where(u => u.CourseId != null).GroupBy(u => u.CourseId)
-             .Select(y => new AllCoursesViewModels
-             {
-                 Id = y.FirstOrDefault().Course.Id,
-                 Name = y.FirstOrDefault().Course.Name,
-                 Description = y.FirstOrDefault().Course.Description,
-                 StartDate = y.FirstOrDefault().Course.StartDate,
-                 count = y.Count(),
-             }).ToList();
+            //GroupBy(x => x.Programa == null ? -1 : x.Programa.Id)
+            // var Users = db.Users.Include("Course").Where(u => u.CourseId != null).GroupBy(u => u.CourseId);
+            //var x = db.Users.Include("Course").GroupBy(u => u.Course== null? -1:u.CourseId)
+            // .Select(y => new AllCoursesViewModels
+            // {
+            //     Id = y.FirstOrDefault().Course.Id,
+            //     Name = y.FirstOrDefault().Course.Name,
+            //     Description = y.FirstOrDefault().Course.Description,
+            //     StartDate = y.FirstOrDefault().Course.StartDate,
+            //     count = y.Count(),
+            // }).ToList();
 
-            if (x.Count() == 0)
+            //if (Users.Count() == 0)
+            //{
+            List<AllCoursesViewModels> coursesList = new List<AllCoursesViewModels>();
+            foreach (var c in db.Courses.ToList())
             {
-               List<AllCoursesViewModels> coursesList = new List<AllCoursesViewModels>();
-                foreach (var c in db.Courses.ToList())
+                coursesList.Add(new AllCoursesViewModels()
                 {
-                    coursesList.Add(new AllCoursesViewModels()
-                    {
-                        Name = c.Name,
-                        Description = c.Description,
-                        StartDate = c.StartDate,
-                        count = 0,
-                    });
+                    Name = c.Name,
+                    Description = c.Description,
+                    StartDate = c.StartDate,
+                   // count = db.Users.ToList().Count
+                });
 
-                }
-                return View(coursesList);
             }
-            else
-            {
-                return View(x);
-            }
-
-            return View();
+            return View(coursesList);
+           
         }
-
-
-        //List<Course> courses = new List<Course>();
-        //foreach (var c in db.Courses.ToList())
-        //{
-        //    courses.Add(new Course()
-        //    {
-        //        Id = c.Id,
-        //        Name = c.Name,
-        //        Description = c.Description,
-        //        StartDate = c.StartDate
-        //     });
-
-        //    AllCoursesViewModels model = new AllCoursesViewModels();
-        //    model.CoursesList = courses;
 
 
    

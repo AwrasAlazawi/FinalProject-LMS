@@ -23,7 +23,7 @@ namespace FinalProject_LMS.Controllers
         { 
         }
 
-       
+       [Authorize(Roles ="Teacher")]
         public ActionResult AllStudents()
         {
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
@@ -35,18 +35,12 @@ namespace FinalProject_LMS.Controllers
                     Name = s.Name,
                     Email = s.Email,
                     CourseName = Course.Name
-                    
-
                 }
                     );
                     
             }
-
-
-            
-           
+          
             return View(studentsList);
-
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
@@ -163,12 +157,9 @@ namespace FinalProject_LMS.Controllers
 
         //
         // GET: /Account/Register
-
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Register(int? k)
         {
-
-
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             RegisterViewModel model = new RegisterViewModel
             {
@@ -180,12 +171,15 @@ namespace FinalProject_LMS.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                //if (model.CourseId == null) { 
+                //    model.CourseId = 0;
+                //}
                 var user = new ApplicationUser { Name = model.Name, UserName = model.Email, Email = model.Email, CourseId = model.CourseId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var userStore = new UserStore<ApplicationUser>(db);
@@ -193,15 +187,17 @@ namespace FinalProject_LMS.Controllers
 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                  //  await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home", new { k = model.Kind });
+                    if (model.Kind == 1)
+                    return RedirectToAction("AllStudents", "Account", new { k = model.Kind });
+                    if (model.Kind == 2)
+                        return RedirectToAction("AllStudents", "Account", new { k = model.Kind });
                 }
                 AddErrors(result);
             }
