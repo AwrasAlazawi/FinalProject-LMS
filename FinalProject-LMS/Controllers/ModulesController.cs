@@ -1,5 +1,6 @@
 ﻿using FinalProject_LMS.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -29,8 +30,8 @@ namespace FinalProject_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
-           // IEnumerable<Activity> activities = db.Activities.Where(a => a.ModuleId == id).ToList();
+            //var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
+            IEnumerable<Activity> activities = db.Activities.Include(a => a.Module).Include(a => a.Type).Where(a => a.ModuleId == id).ToList();
             var Module = db.Modules.Single(m => m.Id == id);
              
             ViewBag.ModuleName = Module.Name;
