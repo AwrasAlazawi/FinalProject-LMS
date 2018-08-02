@@ -13,10 +13,10 @@
 
     if (User.IsInRole("Teacher"))
     {
-        <p>
-            <h2>AllStudents</h2>
-            @Html.ActionLink("Create New", "Create")
-        </p>
+<p>
+    <h2>AllStudents</h2>
+    @Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })
+</p>
         <div class="navbar-right" style="margin-top:8px; margin-right:50px">
             @using (Html.BeginForm("AllStudents", "Account", FormMethod.Get))
             {
