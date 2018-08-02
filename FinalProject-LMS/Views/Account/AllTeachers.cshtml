@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FinalProject_LMS.ViewModels.AllStudentsView>
 @using Microsoft.AspNet.Identity
 @{
-    ViewBag.Title = "AllStudents";
+    ViewBag.Title = "All Teachers";
 }
 
 
@@ -13,10 +13,10 @@
 
     if (User.IsInRole("Teacher"))
     {
-<p>
-    <h2>AllStudents</h2>
-    @Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })
-</p>
+        <p>
+            <h2>AllStudents</h2>
+            @Html.ActionLink("Create New", "Create")
+        </p>
         <div class="navbar-right" style="margin-top:8px; margin-right:50px">
             @using (Html.BeginForm("AllStudents", "Account", FormMethod.Get))
             {
@@ -34,10 +34,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseName)
-                </th>
-                <th></th>
             </tr>
 
             @foreach (var item in Model)
@@ -48,9 +44,6 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseName)
                     </td>
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

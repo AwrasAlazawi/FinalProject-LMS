@@ -43,6 +43,23 @@ namespace FinalProject_LMS.Controllers
             return View(studentsList);
         }
 
+        [Authorize(Roles = "Teacher")]
+        public ActionResult AllTeachers()
+        {
+            List<AllStudentsView> TeachersList = new List<AllStudentsView>();
+            foreach (var s in db.Users.Where(u => u.CourseId == null).ToList())
+            {
+               TeachersList.Add(new AllStudentsView()
+                {
+                    Name = s.Name,
+                    Email = s.Email
+                }
+                    );
+
+            }
+
+            return View(TeachersList);
+        }
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -177,9 +194,7 @@ namespace FinalProject_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                //if (model.CourseId == null) { 
-                //    model.CourseId = 0;
-                //}
+                              
                 var user = new ApplicationUser { Name = model.Name, UserName = model.Email, Email = model.Email, CourseId = model.CourseId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var userStore = new UserStore<ApplicationUser>(db);
@@ -195,7 +210,7 @@ namespace FinalProject_LMS.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     if (model.Kind == 1)
-                    return RedirectToAction("AllStudents", "Account", new { k = model.Kind });
+                    return RedirectToAction("AllTeachers", "Account", new { k = model.Kind });
                     if (model.Kind == 2)
                         return RedirectToAction("AllStudents", "Account", new { k = model.Kind });
                 }
