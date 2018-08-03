@@ -1,66 +1,62 @@
 ﻿@model IEnumerable<FinalProject_LMS.Models.Module>
-@using Microsoft.AspNet.Identity
+
 @{
-    ViewBag.Title = "Modules of Course";
+    ViewBag.Title = "CourseModule";
+
 }
 
+<h2> @Html.Raw(ViewBag.CourseName) </h2>
 
-@if (User.Identity.IsAuthenticated)
-{
 
-    <h2>Modules of Course</h2>
+<p>
+    @Html.ActionLink("Create New Module", "Create", "Modules", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
 
-    <p>
-        @Html.ActionLink("Create New Module", "Create", "Modules", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
-    </p>
-    <table class="table">
-        <tr>
-            <th>
+</p>
+<table class="table">
+    <tr>
+        @*<th>
                 @Html.DisplayNameFor(model => model.Course.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th></th>
-        </tr>
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
                     @Html.DisplayFor(modelItem => item.Course.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @*@Html.ActionLink("xxxx", "Edit","Modules", new { id= 1 })*@
-                    @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.Id }, null)|
-                    @Html.ActionLink("Activities", "ModuleActivity", "Modules", new { id = item.Id }, null)|
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @*@Html.ActionLink("xxxx", "Edit","Modules", new { id= 1 })*@
+                @Html.ActionLink("Edit", "Edit", "Modules", new { id = item.Id }, null)|
+                @Html.ActionLink("Activities", "ModuleActivity", "Modules", new { id = item.Id }, null)|
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
-    </table>
-}
-else
-{ @Html.Partial("_LoginPartial")}
+</table>

@@ -30,7 +30,12 @@ namespace FinalProject_LMS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IEnumerable<Activity> activities = db.Activities.Where(a => a.ModuleId == id).ToList();
+            //var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
+            IEnumerable<Activity> activities = db.Activities.Include(a => a.Module).Include(a => a.Type).Where(a => a.ModuleId == id).ToList();
+            var Module = db.Modules.Single(m => m.Id == id);
+
+            ViewBag.ModuleName = Module.Name;
+
             if (activities == null)
             {
                 return HttpNotFound();
@@ -148,3 +153,4 @@ namespace FinalProject_LMS.Controllers
         }
     }
 }
+

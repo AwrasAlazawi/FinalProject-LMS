@@ -1,5 +1,6 @@
 ﻿using FinalProject_LMS.Models;
 using FinalProject_LMS.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace FinalProject_LMS.Migrations
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-
         //
 
         // GET: Courses
@@ -49,9 +48,6 @@ namespace FinalProject_LMS.Migrations
            
         }
 
-
-   
-
     [Authorize]
         //GET: Courses/Details/5
         public ActionResult CourseModule(int? id)
@@ -61,15 +57,12 @@ namespace FinalProject_LMS.Migrations
             return View(module);
         }
 
-
-        [Authorize(Roles ="Teacher")]
         // GET: Courses/Create
-        public ActionResult Create()
+        [Authorize(Roles ="Teacher")]
+       public ActionResult Create()
         {
             return View();
         }
-
-
 
         // POST: Courses/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -89,21 +82,46 @@ namespace FinalProject_LMS.Migrations
             return View(course);
         }
 
-        // GET: Courses/Edit/5
-
-        [Authorize(Roles = "Teacher")]
-        public ActionResult Edit(int? id)
+           
+        //GET: Courses/Module/
+        public ActionResult CourseMondule(int? id)
         {
-            if (id == null)
+
+            var module = db.Modules.Where(g => g.CourseId == id);
+            var Course = db.Courses.Single(c => c.Id == id);
+            ViewBag.CourseName = Course.Name;
+            return View(module);
+        }
+
+        public JsonResult UniqueCourseName(string DataName, string text)
+        {
+            if (DataName == "Name")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var data = db.Courses.Where(c => c.Name.Equals(text.Trim(), StringComparison.InvariantCultureIgnoreCase)).Select(c => new { text = c.Name }).ToList();
+                if (data != null)
+                    return Json(data);
             }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
+            Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            return null;
+        }
+
+        // GET: Courses/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var courseId = db.Courses.Where(g => g.Id == id);
+
+            return View(courseId);
+
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //Course course = db.Courses.Find(id);
+            //if (course == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return View(course);
         }
 
         // POST: Courses/Edit/5
@@ -111,20 +129,18 @@ namespace FinalProject_LMS.Migrations
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Teacher")]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("AllCourses");
+                return RedirectToAction("Index");
             }
             return View(course);
         }
 
         // GET: Courses/Delete/5
-        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
