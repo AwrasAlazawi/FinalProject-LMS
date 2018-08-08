@@ -132,7 +132,8 @@ namespace FinalProject_LMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    
+                    return RedirectToAction("Index", "Courses");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -190,7 +191,7 @@ namespace FinalProject_LMS.Controllers
         //
         // GET: /Account/Register
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Register(int? k)
         {
 
@@ -212,13 +213,25 @@ namespace FinalProject_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var user = new ApplicationUser { Name = model.Name, UserName = model.Email, Email = model.Email, CourseId = model.CourseId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var userStore = new UserStore<ApplicationUser>(db);
-
+                
 
                 if (result.Succeeded)
                 {
+                    //var userId = User.Identity.GetUserId();
+                    //var currentUser = db.Users.Single(u => u.Id == userId);
+                    //var oldUser = new ApplicationUser()
+                    //{
+                    //    Name = currentUser.Name,
+                    //    UserName = currentUser.UserName,
+                    //    Email = currentUser.Email,
+                    //    PasswordHash = currentUser.PasswordHash
+
+
+                    //};
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -231,7 +244,7 @@ namespace FinalProject_LMS.Controllers
                 }
                 AddErrors(result);
             }
-
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }

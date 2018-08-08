@@ -1,5 +1,8 @@
 ﻿using FinalProject_LMS.Models;
+using FinalProject_LMS.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -7,6 +10,7 @@ using System.Web.Mvc;
 
 namespace FinalProject_LMS.Migrations
 {
+    [Authorize]
     public class CoursesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -14,7 +18,61 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
+            List<CourseView> coursesList = new List<CourseView>();
+            if (User.IsInRole("Student"))
+            {
+                var id = User.Identity.GetUserId();
+                var user = db.Users.Single(u => u.Id == id);
+                var cousre = db.Courses.Where(c => c.Id == user.CourseId).ToList();
+                foreach (var c in cousre)
+                {
+                    
+
+                    coursesList.Add(new CourseView()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        NumberOfStudents = 0
+
+
+
+                    }
+                        );
+
+                }
+
+                
+
+            }
+            else
+            {
+                foreach (var c in db.Courses.ToList())
+                {
+                    int number = db.Users.Where(u => u.CourseId == c.Id).Count();
+
+                    coursesList.Add(new CourseView()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        StartDate = c.StartDate,
+                        NumberOfStudents = number
+
+
+
+                    }
+                        );
+
+                }
+
+            }
+
+         
+          
+
+            return View(coursesList);
         }
         
 
@@ -30,6 +88,7 @@ namespace FinalProject_LMS.Migrations
     
 
         // GET: Courses/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -65,6 +124,7 @@ namespace FinalProject_LMS.Migrations
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +156,7 @@ namespace FinalProject_LMS.Migrations
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

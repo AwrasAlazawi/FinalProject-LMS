@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace FinalProject_LMS.Controllers
 {
+    [Authorize]
     public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -48,6 +49,7 @@ namespace FinalProject_LMS.Controllers
 
 
         // GET: Modules/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(int? id)
         {
             // ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
@@ -85,6 +87,7 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -118,6 +121,7 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Modules/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

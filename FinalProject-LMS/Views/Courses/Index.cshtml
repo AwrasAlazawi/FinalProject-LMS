@@ -1,14 +1,12 @@
-﻿@model IEnumerable<FinalProject_LMS.Models.Course>
+﻿@model IEnumerable<FinalProject_LMS.ViewModels.CourseView>
 
-@{
-    ViewBag.Title = "Index";
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -20,26 +18,45 @@
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
+        @if (User.IsInRole("Teacher"))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfStudents)
+            </th>
+        }
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Module", "CourseModule", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            @if (User.IsInRole("Teacher"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfStudents)
+                </td>
+            }
+
+            <td>
+                @if (User.IsInRole("Teacher"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+                }
+
+                @Html.ActionLink("Modules", "CourseModule", new { id = item.Id })
+
+            </td>
+        </tr>
+    }
 
 </table>
