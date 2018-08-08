@@ -40,7 +40,7 @@ namespace FinalProject_LMS.Controllers
                         Email = s.Email,
                         CourseName = Course.Name
 
-
+                          
                     }
                         );
                       
