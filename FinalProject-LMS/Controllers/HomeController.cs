@@ -23,8 +23,8 @@ namespace FinalProject_LMS.Controllers
 
                 var userId = User.Identity.GetUserId();
                 var user = db.Users.Single(u => u.Id == id);
-                string userName = user.Name;
-                ViewBag.UserName = userName;
+                ViewBag.UserName = user.Name;
+
                 if (k == 2)
                     userManager.AddToRole(id, "Student");
                 else if (k == 1)

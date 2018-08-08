@@ -1,4 +1,5 @@
 ﻿using FinalProject_LMS.Models;
+using Microsoft.AspNet.Identity;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace FinalProject_LMS.Controllers
         // GET: Activities
         public ActionResult Index()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
             return View(activities.ToList());
         }
@@ -38,6 +43,10 @@ namespace FinalProject_LMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Create(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             var data = db.Modules.Where(m => m.Id == id).ToList();
             ViewBag.ModuleId = new SelectList(data, "Id", "Name");
 
@@ -52,6 +61,10 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,TypeId,ModuleId,StartTime,EndTime")] Activity activity)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Activities.Add(activity);
@@ -68,6 +81,11 @@ namespace FinalProject_LMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
+
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -89,6 +107,10 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,TypeId,ModuleId,StartTime,EndTime")] Activity activity)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Entry(activity).State = EntityState.Modified;
@@ -104,6 +126,10 @@ namespace FinalProject_LMS.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -121,6 +147,10 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             Activity activity = db.Activities.Find(id);
             db.Activities.Remove(activity);
             db.SaveChanges();

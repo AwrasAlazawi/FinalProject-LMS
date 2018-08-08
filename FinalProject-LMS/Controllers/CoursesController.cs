@@ -18,11 +18,13 @@ namespace FinalProject_LMS.Migrations
         // GET: Courses
         public ActionResult Index()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             List<CourseView> coursesList = new List<CourseView>();
             if (User.IsInRole("Student"))
             {
-                var id = User.Identity.GetUserId();
-                var user = db.Users.Single(u => u.Id == id);
                 var cousre = db.Courses.Where(c => c.Id == user.CourseId).ToList();
                 foreach (var c in cousre)
                 {
@@ -79,6 +81,9 @@ namespace FinalProject_LMS.Migrations
         //GET: Courses/Module/5
         public ActionResult CourseModule(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
 
             var module = db.Modules.Where(g => g.CourseId == id);
             var Course = db.Courses.Single(c => c.Id == id);
@@ -91,6 +96,10 @@ namespace FinalProject_LMS.Migrations
         [Authorize(Roles = "Teacher")]
         public ActionResult Create()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             return View();
         }
 
@@ -101,6 +110,10 @@ namespace FinalProject_LMS.Migrations
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Courses.Add(course);
@@ -127,6 +140,10 @@ namespace FinalProject_LMS.Migrations
         [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -146,6 +163,10 @@ namespace FinalProject_LMS.Migrations
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Description,StartDate")] Course course)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (ModelState.IsValid)
             {
                 db.Entry(course).State = EntityState.Modified;
