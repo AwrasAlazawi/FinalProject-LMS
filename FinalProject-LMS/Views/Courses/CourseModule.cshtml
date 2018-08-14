@@ -64,10 +64,6 @@
                 }
 
                 @Html.ActionLink("Activities", "ModuleActivity", "Modules", new { id = item.Id }, null)
-                @if (User.IsInRole("Teacher"))
-                {
-                    <span>|</span> @Html.ActionLink("Delete", "Delete", "Courses", new { id = item.Id }, null)
-                }
 
             </td>
         </tr>

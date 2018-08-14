@@ -64,6 +64,7 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <div>
+        @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })
+        @*@Html.ActionLink("Back to List", "CourseModule", "Courses", new { id = Url.RequestContext.RouteData.Values["id"] }, null)*@
+    </div>

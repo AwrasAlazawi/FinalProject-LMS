@@ -91,6 +91,8 @@ namespace FinalProject_LMS.Models
 
         //To determine the Role if it is a Teacher or a Student
         public int? Kind { get; set; }
+
+        public string Id { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -7,6 +7,10 @@ namespace FinalProject_LMS
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/search").Include(
+                     "~/Scripts/Search.js"));
+            bundles.Add(new ScriptBundle("~/bundles/roles").Include(
+                      "~/Scripts/Roles.js"));
             bundles.Add(new ScriptBundle("~/bundles/datevalidations").Include(
                        "~/Scripts/DateValidations.js"));
             bundles.Add(new ScriptBundle("~/bundles/coursenamevalidations").Include(

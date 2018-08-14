@@ -8,20 +8,53 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-               
+
                 <ul class="nav navbar-nav navbar-right">
-                  
+                    @if (User.IsInRole("Teacher"))
+                    {
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-plus"></span> Register
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("Register A Member ", "RegisterMember", "Members")</li>
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-th-list"></span> OverView
+                            </a>
+
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("All Students ", "AllStudents", "Account")</li>
+                                <li>@Html.ActionLink("All Teachers ", "AllTeachers", "Account")</li>
+                                <li>@Html.ActionLink("All Courses ", "Index", "Courses")</li>
+                            </ul>
+
+                        </li>
+
+                    }
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <span class="glyphicon glyphicon-user"></span>  Hi  @ViewBag.UserName
                         </a>
                         <ul class="dropdown-menu">
-                            @if (User.IsInRole("Teacher"))
-        {
-                    <li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
-                    <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>
+                            @*@if (User.IsInRole("Teacher"))
+                                {
+                                    <li>@Html.ActionLink("Register A Member ", "RegisterMember", "Members")</li>
+                                    <li>@Html.ActionLink("Register A Student ", "Register", "Members", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
+                                    <li>@Html.ActionLink("Register A Teacher ", "Register", "Members", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>
 
-}
+                                }*@
 
                             <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
 
@@ -30,12 +63,12 @@
                 </ul>
 
                 @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                @{
-        string name = ViewBag.UserName;
-            @Html.ActionLink(name, name, "Home");*@
+                            @{
+                    string name = ViewBag.UserName;
+                        @Html.ActionLink(name, name, "Home");*@
                 }
             </li>
-           
+
         </ul>
     }
 }
@@ -43,7 +76,7 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         @*<li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>*@
+            <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>*@
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }

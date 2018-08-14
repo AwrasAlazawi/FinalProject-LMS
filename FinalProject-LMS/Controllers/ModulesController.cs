@@ -96,7 +96,7 @@ namespace FinalProject_LMS.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", new { id = module.CourseId });
+                return RedirectToAction("CourseModule","Courses", new { id = module.CourseId });
             }
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
@@ -139,7 +139,8 @@ namespace FinalProject_LMS.Controllers
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("CourseModule", "Courses", new { id = module.CourseId });
             }
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
             return View(module);

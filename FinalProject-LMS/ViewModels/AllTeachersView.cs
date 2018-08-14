@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 namespace FinalProject_LMS.ViewModels
 {
-    public class AllStudentsView 
+    public class AllTeachersView
     {
-        public string  Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
 
-        public List<ApplicationUser> students = new List<ApplicationUser>();
-        public string CourseName { get; set; }
-
-
+        public List<ApplicationUser> teachers = new List<ApplicationUser>();
+      
     }
 }

@@ -22,7 +22,6 @@ namespace FinalProject_LMS.Models
 
 
 
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
            
