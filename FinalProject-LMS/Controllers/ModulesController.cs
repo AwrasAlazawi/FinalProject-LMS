@@ -16,20 +16,27 @@ namespace FinalProject_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
+            var course = db.Courses.Single(c => c.Id == user.CourseId );
+            ViewBag.CourseName = course.Name;
 
-            if (id != null)
+
+
+
+            if (User.IsInRole("Student"))
             {
-                var modules = db.Modules.Where(m => m.CourseId == id);
+                var modules = db.Modules.Where(m => m.CourseId == user.CourseId );
                 return View(modules.ToList());
             }
 
             return View(db.Modules.ToList());
         }
+
+
         public ActionResult ModuleActivity(int? id)
         {
             var UserId = User.Identity.GetUserId();

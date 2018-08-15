@@ -76,7 +76,19 @@ namespace FinalProject_LMS.Migrations
 
             return View(coursesList);
         }
-        
+        // GET: Courses/Details/5
+        public ActionResult Details()
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            Course course = db.Courses.Single(c => c.Id == user.CourseId );
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return View(course);
+        }
+
 
         //GET: Courses/Module/5
         public ActionResult CourseModule(int? id)

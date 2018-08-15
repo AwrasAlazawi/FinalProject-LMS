@@ -260,7 +260,7 @@ namespace FinalProject_LMS.Controllers
 
 
 
-        //public ActionResult Edit(string id="")
+        //public ActionResult Edit(string id = "")
         //{
         //    var UserId = User.Identity.GetUserId();
         //    var user = db.Users.Single(u => u.Id == UserId);
@@ -275,24 +275,22 @@ namespace FinalProject_LMS.Controllers
         //    {
         //        return HttpNotFound();
         //    }
-        //    RegisterViewModel model = new RegisterViewModel()
+        //    EditViewModel model = new EditViewModel()
         //    {
         //        Id = TheUser.Id,
         //        Name = TheUser.Name,
-        //        Email = TheUser.Email,
-        //        Password = TheUser.PasswordHash,
-        //        CourseId = TheUser.CourseId,
-        //        ConfirmPassword  = TheUser.SecurityStamp 
+        //        Email = TheUser.Email
+               
         //    };
         //    return View(model);
         //}
 
-        //// POST: Courses/Edit/5
+        //// POST: Account/Edit/5
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Email,Name,Password,ConfirmPassword,CourseId,Kind")] RegisterViewModel TheUser)
+        //public ActionResult Edit([Bind(Include = "Id,Email,Name")] EditViewModel  TheUser)
         //{
         //    var UserId = User.Identity.GetUserId();
         //    var user = db.Users.Single(u => u.Id == UserId);
@@ -300,35 +298,37 @@ namespace FinalProject_LMS.Controllers
         //    ApplicationUser ModifiedUser = new ApplicationUser()
         //    {
         //        Name = TheUser.Name,
-        //        Email = TheUser.Email ,
-        //        Id = TheUser .Id,
-        //        PasswordHash = TheUser.Password,
-        //        CourseId = TheUser.CourseId,
-        //        SecurityStamp = TheUser.ConfirmPassword,
-        //        EmailConfirmed = false,
-        //        PhoneNumber = null ,
-        //        PhoneNumberConfirmed = false,
-        //        TwoFactorEnabled = false,
-        //        LockoutEnabled = false ,
-        //        LockoutEndDateUtc = null,
-        //        AccessFailedCount = 0,
-        //        UserName = TheUser.Email 
-
-
-
+        //        Email = TheUser.Email
+              
+               
         //    };
         //    if (ModelState.IsValid)
         //    {
-        //        db.Entry(ModifiedUser).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
+           
+        //        try
+        //        {
+        //            db.Entry(ModifiedUser).State = EntityState.Modified;
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
+        //        catch (DbEntityValidationException dbEx)
+        //        {
+        //            foreach (var validationErrors in dbEx.EntityValidationErrors)
+        //            {
+        //                foreach (var validationError in validationErrors.ValidationErrors)
+        //                {
+        //                    System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+        //                }
+        //            }
+        //            return RedirectToAction("Index");
+        //        }
         //    }
         //    return View(TheUser);
         //}
 
 
 
-        // GET: Activities/Details/5
+        // GET: Account/Details/5
         public ActionResult Details(string id="")
         {
             if (id == null)

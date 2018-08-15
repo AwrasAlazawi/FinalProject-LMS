@@ -225,6 +225,7 @@
     <Compile Include="ViewModels\AllStudentsView.cs" />
     <Compile Include="ViewModels\AllTeachersView.cs" />
     <Compile Include="ViewModels\CourseView.cs" />
+    <Compile Include="ViewModels\EditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -310,6 +311,7 @@
     <Content Include="Views\Account\SearchTeachers.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

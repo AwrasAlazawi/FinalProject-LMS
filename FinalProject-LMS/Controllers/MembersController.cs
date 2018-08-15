@@ -18,52 +18,52 @@ namespace FinalProject_LMS.Controllers
         }
 
 
-        //Get
-        [AllowAnonymous]
-        public ActionResult Register(int? k)
-        {
-            ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
-            RegisterViewModel model = new RegisterViewModel
-            {
-                Kind = k
-            };
-            return View(model);
+        ////Get
+        //[AllowAnonymous]
+        //public ActionResult Register(int? k)
+        //{
+        //    ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
+        //    RegisterViewModel model = new RegisterViewModel
+        //    {
+        //        Kind = k
+        //    };
+        //    return View(model);
 
-        }
-
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(string Email, string Name, string Password, string ConfirmPassword, int? CourseId, int? Kind)
-        {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new ApplicationUserManager(userStore);
-
-            var user = new ApplicationUser
-            {
-                Name = Name,
-                UserName = Email,
-                Email = Email,
-                CourseId = CourseId,
+        //}
 
 
-            };
-            //db.Users.Add(user);
-            //db.SaveChanges();
-            var result = userManager.Create(user, Password);
-            var User = userManager.FindByName(Email);
-            if (Kind == 1)
-            {
-                userManager.AddToRole(User.Id, "Teacher");
-            }
-            else
-            {
-                userManager.AddToRole(User.Id, "Student");
-            }
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Register(string Email, string Name, string Password, string ConfirmPassword, int? CourseId, int? Kind)
+        //{
+        //    var userStore = new UserStore<ApplicationUser>(db);
+        //    var userManager = new ApplicationUserManager(userStore);
 
-            return RedirectToAction("Index", "Home");
-        }
+        //    var user = new ApplicationUser
+        //    {
+        //        Name = Name,
+        //        UserName = Email,
+        //        Email = Email,
+        //        CourseId = CourseId,
+
+
+        //    };
+        //    //db.Users.Add(user);
+        //    //db.SaveChanges();
+        //    var result = userManager.Create(user, Password);
+        //    var User = userManager.FindByName(Email);
+        //    if (Kind == 1)
+        //    {
+        //        userManager.AddToRole(User.Id, "Teacher");
+        //    }
+        //    else
+        //    {
+        //        userManager.AddToRole(User.Id, "Student");
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
 
 
         //Get

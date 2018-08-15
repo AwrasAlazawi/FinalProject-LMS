@@ -8,7 +8,7 @@
     $("input[type='submit']").on("click", OnClick);
 });
 function OnChange(e) {
-  
+   
     var startDate = document.getElementById("StartDate").value;
     var endDate = document.getElementById("EndDate").value;
     if (startDate < courseStartDate) {
