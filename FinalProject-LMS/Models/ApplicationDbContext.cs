@@ -25,7 +25,7 @@ namespace FinalProject_LMS.Models
             return new ApplicationDbContext();
         }
 
-     
+ 
     }
 }
 

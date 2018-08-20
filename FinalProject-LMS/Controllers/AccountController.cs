@@ -280,7 +280,7 @@ namespace FinalProject_LMS.Controllers
         //        Id = TheUser.Id,
         //        Name = TheUser.Name,
         //        Email = TheUser.Email
-               
+
         //    };
         //    return View(model);
         //}
@@ -299,12 +299,12 @@ namespace FinalProject_LMS.Controllers
         //    {
         //        Name = TheUser.Name,
         //        Email = TheUser.Email
-              
-               
+
+
         //    };
         //    if (ModelState.IsValid)
         //    {
-           
+
         //        try
         //        {
         //            db.Entry(ModifiedUser).State = EntityState.Modified;
