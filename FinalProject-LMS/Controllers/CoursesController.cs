@@ -96,9 +96,13 @@ namespace FinalProject_LMS.Migrations
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
+         
 
             var module = db.Modules.Where(g => g.CourseId == id);
-            var Course = db.Courses.Single(c => c.Id == id);
+           
+            var Course = db.Courses.SingleOrDefault(c => c.Id == id);
+            if (Course == null)
+                return RedirectToAction("Index", "Courses");
             ViewBag.CourseName = Course.Name;
             return View(module);
         }

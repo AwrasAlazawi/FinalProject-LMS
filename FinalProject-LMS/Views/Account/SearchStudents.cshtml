@@ -3,71 +3,69 @@
 @{
     ViewBag.Title = "SearchStudents";
 }
-
-<h2>Search Students</h2>
-
-
-<div class="navbar-right" style="margin-top:8px; margin-right:50px">
-    @using (Html.BeginForm("SearchStudents", "Account", FormMethod.Get))
-    {
-        <ul class="nav navbar-nav">
-            <li>@Html.TextBox("searchName",  null, new { @Placeholder = "Name.." })</li>
-            <li><input type="submit" value="Search" /></li>
-        </ul>
-    }
-</div>
+<div class=" jumbotron">
+    <h2>Search Students</h2>
 
 
+    <div class="navbar-right" style="margin-top:8px; margin-right:50px">
+        @using (Html.BeginForm("SearchStudents", "Account", FormMethod.Get))
+        {
+            <ul class="nav navbar-nav">
+                <li>@Html.TextBox("searchName", null, new { @Placeholder = "Name.." })</li>
+                <li><input type="submit" value="Search" class="btn btn-primary" /></li>
+            </ul>
+        }
+    </div>
 
 
 
 
 
-<table class="table">
-    <tr>
 
 
-
-        <th>
-           
-            @Html.DisplayNameFor(model => model.Name)
-
-
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email )
-        </th>
-        <th>
-           
-          
-            @Html.DisplayNameFor(model => model.CourseName)
-        </th>
-
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CourseName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
 
-</table>
+
+
+            <th>
+
+                @Html.DisplayNameFor(model => model.Name)
+
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+
+
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+               
+            </tr>
+        }
+
+    </table>
+    @Html.ActionLink("Back to list", "AllStudents")
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 

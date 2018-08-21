@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+   
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -26,4 +27,45 @@ textarea {
 img.logo {
     position: absolute;
     width: 145px;
+}
+
+img.backgroundImage {
+    width: 100%;
+    height: 100%;
+    padding-top: 0px !important;
+}
+
+.navbar {
+    background-color: #234c6f;
+    border-color: #234c6f;
+}
+
+.container .jumbotron {
+    border-radius: 50px;
+}
+
+
+.jumbotron {
+    background-color: #a9868654;
+}
+
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    float: left;
+    margin-left: -20px;
+}
+
+.form-horizontal .control-label, .form-horizontal .radio, .form-horizontal .checkbox, .form-horizontal .radio-inline, .form-horizontal .checkbox-inline {
+    padding-top: 7px;
+    margin-top: -15px;
+ 
+}
+
+.form-control {
+    border-radius: 9px;
+}
+
+input, select, textarea {
+    max-width: 220px;
+    height: 40px;
+    border-radius: 10px;
 }

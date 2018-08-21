@@ -42,7 +42,7 @@ namespace FinalProject_LMS.Controllers
             //};
             //return RedirectToAction("Login", "Account", new {model });
 
-            return RedirectToAction("Index", "Courses");
+            return View();
 
 
         }

@@ -135,6 +135,11 @@ namespace FinalProject_LMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Activity activity = db.Activities.Find(id);
+           
+            var module = db.Modules.Single(c => c.Id == activity .ModuleId);
+            var type = db.ActivityTypes.Single(a => a.Id == activity.TypeId);
+            activity.Module .Name = module .Name;
+            activity.Type.Name = type.Name;
             if (activity == null)
             {
                 return HttpNotFound();
@@ -154,7 +159,7 @@ namespace FinalProject_LMS.Controllers
             Activity activity = db.Activities.Find(id);
             db.Activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ModuleActivity", "Modules", new { id = activity.ModuleId });
         }
 
         protected override void Dispose(bool disposing)

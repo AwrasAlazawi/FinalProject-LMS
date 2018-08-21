@@ -3,68 +3,70 @@
 @{
     ViewBag.Title = "ModuleActivity";
 }
+<div class=" jumbotron">
+    <h2> @Html.Raw(ViewBag.ModuleName) </h2>
 
-<h2> @Html.Raw(ViewBag.ModuleName) </h2>
 
+    <p>
+        @if (User.IsInRole("Teacher"))
+        {
+            @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+        }
 
-<p>
-    @if (User.IsInRole("Teacher"))
-    {
-        @Html.ActionLink("Create New Activity", "Create", "Activities", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
-    }
-
-</p>
-<table class="table">
-    <tr>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Module.Name)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Type.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    </p>
+    <table class="table">
         <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.Module.Name)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @if (User.IsInRole("Teacher"))
-                {
-                    @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null)
-                }
-
-                @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-            </td>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Module.Name)
+                </th>*@
+            <th>
+                @Html.Label("Type")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
-<div>
-    @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Module.Name)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Activities", new { id = item.Id }, null) <span>|</span>
+                        @Html.ActionLink("Delete", "Delete", "Activities", new { id = item.Id }, null)
+                    }
+
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div>
+        @Html.ActionLink("Back to Modules", "CourseModule", "Courses", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+    </div>
 </div>

@@ -27,6 +27,11 @@ namespace FinalProject_LMS.Controllers
 
         public ActionResult AllStudents(string searchName, bool Assending = true, string SortOn = null)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
             var users = db.Users.ToList();
             if (searchName == null && SortOn == null)
@@ -86,6 +91,12 @@ namespace FinalProject_LMS.Controllers
         }
         public ActionResult SearchStudents(string searchName, bool Assending = true, string SortOn = null)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
+
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
             var users = db.Users.ToList();
             if (searchName == null && SortOn == null)
@@ -144,6 +155,12 @@ namespace FinalProject_LMS.Controllers
         }
         public ActionResult SearchTeachers(string searchName, bool Assending = true, string SortOn = null)
         {
+
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
             List<AllTeachersView> teachersList = new List<AllTeachersView>();
             var users = db.Users.ToList();
             if (searchName == null && SortOn == null)
@@ -203,6 +220,11 @@ namespace FinalProject_LMS.Controllers
 
         public ActionResult AllTeachers(string searchName, bool Assending = true, string SortOn = null)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
             List<AllTeachersView> teachersList = new List<AllTeachersView>();
             var users = db.Users.ToList();
             if (searchName == null && SortOn == null)
@@ -419,6 +441,18 @@ namespace FinalProject_LMS.Controllers
         //
         //
         // POST: /Account/Login
+
+        [AllowAnonymous]
+        public ActionResult HomePage()
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+            return View();
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -435,8 +469,8 @@ namespace FinalProject_LMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-
-                    return RedirectToAction("Index", "Courses");
+                    
+                    return RedirectToAction("HomePage", "Account");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

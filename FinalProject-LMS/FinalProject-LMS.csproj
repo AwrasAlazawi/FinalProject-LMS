@@ -222,7 +222,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\logo-lexicon_2x.gif" />
+    <Content Include="Content\Image\backgroundimage.gif" />
+    <Content Include="Content\Image\elearning.jpg" />
+    <Content Include="Content\Image\logo-lexicon_2x.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -304,6 +306,7 @@
     <Content Include="Views\Account\SearchTeachers.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Account\HomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

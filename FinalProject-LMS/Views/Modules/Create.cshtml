@@ -3,19 +3,19 @@
 @{
     ViewBag.Title = "Create";
 }
+<div class=" jumbotron">
+    <h2>Create New Module</h2>
 
-<h2>Create</h2>
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Module</h4>
-        <hr />
-        
-        <hr />
+
+
+
+        <hr />         
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -38,9 +38,9 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
-                <span id="warningTextForCourseStartDate" class="text-danger hidden">It is not allowed to add a module befor Course Start Date</span>
+                <span id="warningTextForCourseStartDate" class="text-danger hidden">It is NOT allowed to add a module befor Course START DATE</span>
             </div>
-          
+
         </div>
 
         <div class="form-group">
@@ -48,12 +48,13 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
-                <span id="warningText" class="text-danger hidden">The two dates are Not Correct</span>
+                <span id="warningText" class="text-danger hidden">It is NOT allowed to add THE END DATE before THE START DATE</span>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Course", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
@@ -62,17 +63,18 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="CreateButton" type="submit" value="Create" class="btn btn-default"/>
-               
-                
+                <input id="CreateButton" type="submit" value="Create" class="btn btn-primary" />
+
+
             </div>
         </div>
     </div>
-}
+    }
 
     <div>
         @Html.ActionLink("Back to List", "CourseModule", "Courses", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
     </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

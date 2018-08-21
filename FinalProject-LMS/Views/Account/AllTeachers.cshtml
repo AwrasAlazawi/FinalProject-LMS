@@ -3,55 +3,52 @@
 @{
     ViewBag.Title = "AllTeachers";
 }
-
-<h2>AllTeachers</h2>
-
-
-<div class="navbar-right" style="margin-top:8px; margin-right:50px">
-    @using (Html.BeginForm("SearchTeachers", "Account", FormMethod.Get))
-    {
-        <ul class="nav navbar-nav">
-            <li>@Html.TextBox("searchName", null, new { @Placeholder = "Name.."})</li>
-            <li><input type="submit" value="Search" /></li>
-        </ul>
-    }
-</div>
+<div class=" jumbotron">
+    <h2>All Teachers</h2>
 
 
+    <div class="navbar-right" style="margin-top:8px; margin-right:50px">
+        @using (Html.BeginForm("SearchTeachers", "Account", FormMethod.Get))
+        {
+            <ul class="nav navbar-nav">
+                <li>@Html.TextBox("searchName", null, new { @Placeholder = "Name.." })</li>
+                <li><input type="submit" value="Search" class="btn btn-primary"  /></li>
+            </ul>
+        }
+    </div>
 
 
 
 
-<table class="table">
-    <tr>
-        <th>
-            <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Name" , Assending = true, searchName= ""})"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a>
-            <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Name" , Assending = false})"><i class="glyphicon glyphicon-sort-by-alphabet-alt"></i></a>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Email" , Assending = true, searchName= ""})"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a>
-            <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Email" , Assending = false})"><i class="glyphicon glyphicon-sort-by-alphabet-alt"></i></a>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+            <th>
+                <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Name" , Assending = true, searchName= ""})"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a>
+                <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Name" , Assending = false})"><i class="glyphicon glyphicon-sort-by-alphabet-alt"></i></a>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Email" , Assending = true, searchName= ""})"><i class="glyphicon glyphicon-sort-by-alphabet"></i></a>
+                <a href="@Url.Action("AllTeachers", "Account", new { SortOn = "Email" , Assending = false})"><i class="glyphicon glyphicon-sort-by-alphabet-alt"></i></a>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            
+            </tr>
+        }
+
+    </table>
+</div>

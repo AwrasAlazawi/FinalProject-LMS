@@ -1,6 +1,7 @@
 ﻿using FinalProject_LMS.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace FinalProject_LMS.Controllers
@@ -70,6 +71,10 @@ namespace FinalProject_LMS.Controllers
         [AllowAnonymous]
         public ActionResult RegisterMember()
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
 
             return View();
@@ -80,6 +85,9 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RegisterMember(string Email, string Name, string Password, string ConfirmPassword, int? CourseId, int? Kind)
         {
+          
+
+
             var userStore = new UserStore<ApplicationUser>(db);
             var userManager = new ApplicationUserManager(userStore);
             var user = new ApplicationUser();
@@ -116,13 +124,15 @@ namespace FinalProject_LMS.Controllers
             if (Kind == 1)
             {
                 userManager.AddToRole(User.Id, "Teacher");
+                return RedirectToAction("AllTeachers", "Account");
             }
             else
             {
                 userManager.AddToRole(User.Id, "Student");
+                return RedirectToAction("AllStudents", "Account");
             }
 
-            return RedirectToAction("Index", "Home");
+            
         }
 
     }

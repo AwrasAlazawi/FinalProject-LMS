@@ -54,8 +54,8 @@
 
                             <ul class="dropdown-menu">
 
-                                <li>@Html.ActionLink("Course Details", "Details", "Courses")</li>
-                                <li> @Html.ActionLink("My Module", "Index", "Modules")</li>
+                                <li>@Html.ActionLink("Details", "Details", "Courses")</li>
+                                <li> @Html.ActionLink("Modules", "Index", "Modules")</li>
                              
                             </ul>
 
@@ -87,11 +87,7 @@
                     </li>
                 </ul>
 
-                @*@Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                            @{
-                    string name = ViewBag.UserName;
-                        @Html.ActionLink(name, name, "Home");*@
-                }
+               
             </li>
 
         </ul>

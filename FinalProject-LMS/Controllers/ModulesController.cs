@@ -21,7 +21,7 @@ namespace FinalProject_LMS.Controllers
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
-            var course = db.Courses.Single(c => c.Id == user.CourseId );
+            var course = db.Courses.Single(c => c.Id == user.CourseId);
             ViewBag.CourseName = course.Name;
 
 
@@ -29,12 +29,13 @@ namespace FinalProject_LMS.Controllers
 
             if (User.IsInRole("Student"))
             {
-                var modules = db.Modules.Where(m => m.CourseId == user.CourseId );
+                var modules = db.Modules.Where(m => m.CourseId == user.CourseId);
                 return View(modules.ToList());
             }
 
             return View(db.Modules.ToList());
         }
+
 
 
         public ActionResult ModuleActivity(int? id)
@@ -159,6 +160,7 @@ namespace FinalProject_LMS.Controllers
         {
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
+
             ViewBag.UserName = user.Name;
 
             if (id == null)
@@ -166,6 +168,8 @@ namespace FinalProject_LMS.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            var course = db.Courses.Single(c => c.Id == module.CourseId);
+            module.Course.Name = course.Name;
             if (module == null)
             {
                 return HttpNotFound();
@@ -185,7 +189,7 @@ namespace FinalProject_LMS.Controllers
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("CourseModule", "Courses", new { id = module.CourseId });
         }
 
         protected override void Dispose(bool disposing)
