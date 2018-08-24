@@ -10,34 +10,50 @@ using System.Web.Mvc;
 
 namespace FinalProject_LMS.Controllers
 {
+    [Authorize]
     public class ModulesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Modules
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
-            if (id != null)
+            var course = db.Courses.Single(c => c.Id == user.CourseId);
+            ViewBag.CourseName = course.Name;
+
+
+
+
+            if (User.IsInRole("Student"))
             {
-                var modules = db.Modules.Where(m => m.CourseId == id);
+                var modules = db.Modules.Where(m => m.CourseId == user.CourseId);
                 return View(modules.ToList());
             }
 
             return View(db.Modules.ToList());
         }
+
+
+
         public ActionResult ModuleActivity(int? id)
         {
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IEnumerable<Activity> activities = db.Activities.Where(a => a.ModuleId == id).ToList();
+            //var activities = db.Activities.Include(a => a.Module).Include(a => a.Type);
+            IEnumerable<Activity> activities = db.Activities.Include(a => a.Module).Include(a => a.Type).Where(a => a.ModuleId == id).ToList();
+            var Module = db.Modules.Single(m => m.Id == id);
+             
+            ViewBag.ModuleName = Module.Name;
+            
             if (activities == null)
             {
                 return HttpNotFound();
@@ -50,12 +66,14 @@ namespace FinalProject_LMS.Controllers
 
 
         // GET: Modules/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(int? id)
         {
-            // ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
+
+            // ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name");
 
             var data = db.Courses.Where(c => c.Id == id).ToList();
             Course d = db.Courses.Single(c => c.Id == id);
@@ -86,7 +104,7 @@ namespace FinalProject_LMS.Controllers
                 db.Modules.Add(module);
                 db.SaveChanges();
 
-                return RedirectToAction("Index", new { id = module.CourseId });
+                return RedirectToAction("CourseModule","Courses", new { id = module.CourseId });
             }
 
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
@@ -94,6 +112,7 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Modules/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
             var UserId = User.Identity.GetUserId();
@@ -128,20 +147,29 @@ namespace FinalProject_LMS.Controllers
             {
                 db.Entry(module).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
+                return RedirectToAction("CourseModule", "Courses", new { id = module.CourseId });
             }
             ViewBag.CourseId = new SelectList(db.Courses, "Id", "Name", module.CourseId);
             return View(module);
         }
 
         // GET: Modules/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+
+            ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Module module = db.Modules.Find(id);
+            var course = db.Courses.Single(c => c.Id == module.CourseId);
+            module.Course.Name = course.Name;
             if (module == null)
             {
                 return HttpNotFound();
@@ -154,10 +182,14 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             Module module = db.Modules.Find(id);
             db.Modules.Remove(module);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("CourseModule", "Courses", new { id = module.CourseId });
         }
 
         protected override void Dispose(bool disposing)

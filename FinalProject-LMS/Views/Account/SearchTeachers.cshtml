@@ -1,0 +1,49 @@
+﻿@model IEnumerable<FinalProject_LMS.ViewModels.AllTeachersView>
+
+@{
+    ViewBag.Title = "SearchTeachers";
+}
+<div class=" jumbotron">
+    <h2>Search Teachers</h2>
+
+    <div class="navbar-right" style="margin-top:8px; margin-right:50px">
+        @using (Html.BeginForm("SearchTeachers", "Account", FormMethod.Get))
+        {
+            <ul class="nav navbar-nav">
+                <li>@Html.TextBox("searchName", null, new { @Placeholder = "Name.." })</li>
+                <li><input type="submit" value="Search" class="btn btn-primary" /></li>
+            </ul>
+        }
+    </div>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    @Html.ActionLink("Back to list", "AllTeachers")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/message")
+}

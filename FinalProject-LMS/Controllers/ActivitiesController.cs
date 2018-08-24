@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace FinalProject_LMS.Controllers
 {
+    [Authorize]
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -39,6 +40,7 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Activities/Create
+        [Authorize(Roles = "Teacher")]
         public ActionResult Create(int? id)
         {
             var UserId = User.Identity.GetUserId();
@@ -67,7 +69,7 @@ namespace FinalProject_LMS.Controllers
             {
                 db.Activities.Add(activity);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ModuleActivity","Modules",new { id = activity.ModuleId });
             }
 
             ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
@@ -76,8 +78,10 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Activities/Edit/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Edit(int? id)
         {
+
             var UserId = User.Identity.GetUserId();
             var user = db.Users.Single(u => u.Id == UserId);
             ViewBag.UserName = user.Name;
@@ -111,7 +115,7 @@ namespace FinalProject_LMS.Controllers
             {
                 db.Entry(activity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ModuleActivity", "Modules", new { id = activity.ModuleId  });
             }
             ViewBag.ModuleId = new SelectList(db.Modules, "Id", "Name", activity.ModuleId);
             ViewBag.TypeId = new SelectList(db.ActivityTypes, "Id", "Name", activity.TypeId);
@@ -119,13 +123,23 @@ namespace FinalProject_LMS.Controllers
         }
 
         // GET: Activities/Delete/5
+        [Authorize(Roles = "Teacher")]
         public ActionResult Delete(int? id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Activity activity = db.Activities.Find(id);
+           
+            var module = db.Modules.Single(c => c.Id == activity .ModuleId);
+            var type = db.ActivityTypes.Single(a => a.Id == activity.TypeId);
+            activity.Module .Name = module .Name;
+            activity.Type.Name = type.Name;
             if (activity == null)
             {
                 return HttpNotFound();
@@ -138,10 +152,14 @@ namespace FinalProject_LMS.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
             Activity activity = db.Activities.Find(id);
             db.Activities.Remove(activity);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ModuleActivity", "Modules", new { id = activity.ModuleId });
         }
 
         protected override void Dispose(bool disposing)

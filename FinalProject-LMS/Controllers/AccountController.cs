@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -20,14 +21,121 @@ namespace FinalProject_LMS.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
-        { 
+        {
         }
 
-       
-        public ActionResult AllStudents()
+
+        public ActionResult AllStudents(string searchName, bool Assending = true, string SortOn = null)
         {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
             List<AllStudentsView> studentsList = new List<AllStudentsView>();
-            foreach (var s in db.Users.Where(u => u.CourseId !=null).ToList())
+            var users = db.Users.ToList();
+            if (searchName == null && SortOn == null)
+            {
+                users = db.Users.Where(u => u.CourseId != null).ToList();
+            }
+            else if (searchName != null)
+            {
+                users = db.Users.Where(u => u.CourseId != null).Where(u => u.Name.Contains(searchName)).ToList();
+            }
+
+            else if (SortOn == "Name")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.Name).ToList();
+            }
+            else if (SortOn == "Email")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.Name).ToList();
+            }
+
+            else if (SortOn == "CourseId")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.CourseId).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.CourseId).ToList();
+            }
+
+
+
+
+
+            foreach (var s in users)
+            {
+                var Course = db.Courses.Single(c => c.Id == s.CourseId);
+                studentsList.Add(new AllStudentsView()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email,
+                    CourseName = Course.Name
+
+
+                }
+                    );
+
+            }
+
+            return View(studentsList);
+
+        }
+        public ActionResult SearchStudents(string searchName, bool Assending = true, string SortOn = null)
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
+
+            List<AllStudentsView> studentsList = new List<AllStudentsView>();
+            var users = db.Users.ToList();
+            if (searchName == null && SortOn == null)
+            {
+                users = db.Users.Where(u => u.CourseId != null).ToList();
+            }
+            else if (searchName != null)
+            {
+                users = db.Users.Where(u => u.CourseId != null).Where(u => u.Name.Contains(searchName)).ToList();
+            }
+
+            else if (SortOn == "Name")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.Name).ToList();
+            }
+            else if (SortOn == "Email")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.Name).ToList();
+            }
+
+            else if (SortOn == "CourseId")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId != null).OrderBy(u => u.CourseId).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId != null).OrderByDescending(u => u.CourseId).ToList();
+            }
+
+
+
+
+
+            foreach (var s in users)
             {
                 var Course = db.Courses.Single(c => c.Id == s.CourseId);
                 studentsList.Add(new AllStudentsView()
@@ -35,19 +143,262 @@ namespace FinalProject_LMS.Controllers
                     Name = s.Name,
                     Email = s.Email,
                     CourseName = Course.Name
-                    
+
 
                 }
                     );
-                    
+
             }
 
-
-            
-           
             return View(studentsList);
 
         }
+        public ActionResult SearchTeachers(string searchName, bool Assending = true, string SortOn = null)
+        {
+
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
+            List<AllTeachersView> teachersList = new List<AllTeachersView>();
+            var users = db.Users.ToList();
+            if (searchName == null && SortOn == null)
+            {
+                users = db.Users.Where(u => u.CourseId == null).ToList();
+            }
+            else if (searchName != null)
+            {
+                users = db.Users.Where(u => u.CourseId == null).Where(u => u.Name.Contains(searchName)).ToList();
+            }
+
+            else if (SortOn == "Name")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId == null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId == null).OrderByDescending(u => u.Name).ToList();
+            }
+            else if (SortOn == "Email")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId == null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId == null).OrderByDescending(u => u.Name).ToList();
+            }
+
+
+
+
+
+
+
+            foreach (var s in users)
+            {
+
+                teachersList.Add(new AllTeachersView()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email
+
+
+
+                }
+                    );
+
+            }
+
+
+          
+
+            return View(teachersList);
+
+
+        }
+
+
+        public ActionResult AllTeachers(string searchName, bool Assending = true, string SortOn = null)
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+
+            List<AllTeachersView> teachersList = new List<AllTeachersView>();
+            var users = db.Users.ToList();
+            if (searchName == null && SortOn == null)
+            {
+                users = db.Users.Where(u => u.CourseId == null).ToList();
+            }
+            else if (searchName != null)
+            {
+                users = db.Users.Where(u => u.CourseId == null).Where(u => u.Name.Contains(searchName)).ToList();
+            }
+
+            else if (SortOn == "Name")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId == null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId == null).OrderByDescending(u => u.Name).ToList();
+            }
+            else if (SortOn == "Email")
+            {
+                if (Assending == true)
+                    users = db.Users.Where(u => u.CourseId == null).OrderBy(u => u.Name).ToList();
+                else
+                    users = db.Users.Where(u => u.CourseId == null).OrderByDescending(u => u.Name).ToList();
+            }
+
+
+
+
+
+
+
+            foreach (var s in users)
+            {
+
+                teachersList.Add(new AllTeachersView()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Email = s.Email
+
+
+
+                }
+                    );
+
+            }
+
+
+
+            return View(teachersList);
+
+        }
+
+
+
+
+        //public ActionResult Edit(string id = "")
+        //{
+        //    var UserId = User.Identity.GetUserId();
+        //    var user = db.Users.Single(u => u.Id == UserId);
+        //    ViewBag.UserName = user.Name;
+
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    ApplicationUser TheUser = db.Users.Find(id);
+        //    if (TheUser == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    EditViewModel model = new EditViewModel()
+        //    {
+        //        Id = TheUser.Id,
+        //        Name = TheUser.Name,
+        //        Email = TheUser.Email
+
+        //    };
+        //    return View(model);
+        //}
+
+        //// POST: Account/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Email,Name")] EditViewModel  TheUser)
+        //{
+        //    var UserId = User.Identity.GetUserId();
+        //    var user = db.Users.Single(u => u.Id == UserId);
+        //    ViewBag.UserName = user.Name;
+        //    ApplicationUser ModifiedUser = new ApplicationUser()
+        //    {
+        //        Name = TheUser.Name,
+        //        Email = TheUser.Email
+
+
+        //    };
+        //    if (ModelState.IsValid)
+        //    {
+
+        //        try
+        //        {
+        //            db.Entry(ModifiedUser).State = EntityState.Modified;
+        //            db.SaveChanges();
+        //            return RedirectToAction("Index");
+        //        }
+        //        catch (DbEntityValidationException dbEx)
+        //        {
+        //            foreach (var validationErrors in dbEx.EntityValidationErrors)
+        //            {
+        //                foreach (var validationError in validationErrors.ValidationErrors)
+        //                {
+        //                    System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+        //                }
+        //            }
+        //            return RedirectToAction("Index");
+        //        }
+        //    }
+        //    return View(TheUser);
+        //}
+
+
+
+        // GET: Account/Details/5
+        public ActionResult Details(string id="")
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser   user = db.Users .Find(id);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            RegisterViewModel model = new RegisterViewModel()
+            {
+                Id = id,
+                Name =  user.Name,
+                Email = user.Email 
+            };
+
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
@@ -75,7 +426,7 @@ namespace FinalProject_LMS.Controllers
             }
             private set
             {
-                _userManager = value; 
+                _userManager = value;
             }
         }
 
@@ -90,6 +441,18 @@ namespace FinalProject_LMS.Controllers
         //
         //
         // POST: /Account/Login
+
+        [AllowAnonymous]
+        public ActionResult HomePage()
+        {
+            var UserId = User.Identity.GetUserId();
+            var user = db.Users.Single(u => u.Id == UserId);
+            ViewBag.UserName = user.Name;
+
+            return View();
+        }
+
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -106,7 +469,8 @@ namespace FinalProject_LMS.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    
+                    return RedirectToAction("HomePage", "Account");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -164,7 +528,7 @@ namespace FinalProject_LMS.Controllers
         //
         // GET: /Account/Register
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Teacher")]
         public ActionResult Register(int? k)
         {
             var UserId = User.Identity.GetUserId();
@@ -188,6 +552,7 @@ namespace FinalProject_LMS.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = new ApplicationUser { Name = model.Name, UserName = model.Email, Email = model.Email, CourseId = model.CourseId };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var userStore = new UserStore<ApplicationUser>(db);
@@ -195,6 +560,17 @@ namespace FinalProject_LMS.Controllers
 
                 if (result.Succeeded)
                 {
+                    //var userId = User.Identity.GetUserId();
+                    //var currentUser = db.Users.Single(u => u.Id == userId);
+                    //var oldUser = new ApplicationUser()
+                    //{
+                    //    Name = currentUser.Name,
+                    //    UserName = currentUser.UserName,
+                    //    Email = currentUser.Email,
+                    //    PasswordHash = currentUser.PasswordHash
+
+
+                    //};
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

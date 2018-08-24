@@ -14,6 +14,8 @@ namespace FinalProject_LMS.Models
 
         public DbSet<Activity> Activities { get; set; }
 
+        public DbSet<UMessage> UMessages { get; set; }
+
 
         public ApplicationDbContext()
                 : base("DefaultConnection", throwIfV1Schema: false)
@@ -25,8 +27,8 @@ namespace FinalProject_LMS.Models
             return new ApplicationDbContext();
         }
 
-     
+
     }
 }
 
-        
+

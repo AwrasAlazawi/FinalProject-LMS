@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -6,36 +7,109 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
+            <li>
 
-
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-user"></span>  Hi  @ViewBag.UserName
-                </a>
-                <ul class="dropdown-menu">
+                <ul class="nav navbar-nav navbar-right">
                     @if (User.IsInRole("Teacher"))
                     {
-                        <li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
-                        <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                    }
 
-                    else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-plus"></span> Register
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("Register A Member ", "RegisterMember", "Members")</li>
+
+
+                            </ul>
+
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-th-list"></span> OverView
+                            </a>
+
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("All Students ", "AllStudents", "Account")</li>
+                                <li>@Html.ActionLink("All Teachers ", "AllTeachers", "Account")</li>
+                                <li>@Html.ActionLink("All Courses ", "Index", "Courses")</li>
+                            </ul>
+
+                        </li>
+
+                    }
+                    @if (User.IsInRole("Student"))
                     {
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                    }
 
+
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-book "></span> My Course
+                            </a>
+
+                            <ul class="dropdown-menu">
+
+                                <li>@Html.ActionLink("Details", "Details", "Courses")</li>
+                                <li> @Html.ActionLink("Modules", "Index", "Modules")</li>
+
+                            </ul>
+
+                        </li>
+
+
+
+
+
+                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-envelope"></span> My Message <span id="MessageStar" class="glyphicon glyphicon-flag hidden" style="color:red "></span>
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            <li>@Html.ActionLink("Inbox", "Index", "UMessages")</li>
+                            <li>@Html.ActionLink("Outbox", "OutIndex", "UMessages")</li>
+
+
+                        </ul>
+
+                    </li>
+                    <li class="dropdown">
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user"></span>  Hi  @ViewBag.UserName
+                        </a>
+                        <ul class="dropdown-menu">
+                            @*@if (User.IsInRole("Teacher"))
+                                {
+                                    <li>@Html.ActionLink("Register A Member ", "RegisterMember", "Members")</li>
+                                    <li>@Html.ActionLink("Register A Student ", "Register", "Members", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
+                                    <li>@Html.ActionLink("Register A Teacher ", "Register", "Members", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>
+
+                                }*@
+
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+                        </ul>
+                    </li>
                 </ul>
+
+
             </li>
+
         </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
+        @*<li>@Html.ActionLink("Register A Student ", "Register", "Account", routeValues: new { k = 2 }, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Register A Teacher ", "Register", "Account", routeValues: new { k = 1 }, htmlAttributes: new { id = "registerLink" })</li>*@
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
-
-
