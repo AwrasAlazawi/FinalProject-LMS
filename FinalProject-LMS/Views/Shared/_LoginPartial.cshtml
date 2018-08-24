@@ -56,7 +56,7 @@
 
                                 <li>@Html.ActionLink("Details", "Details", "Courses")</li>
                                 <li> @Html.ActionLink("Modules", "Index", "Modules")</li>
-                             
+
                             </ul>
 
                         </li>
@@ -66,7 +66,19 @@
 
 
                     }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-envelope"></span> My Message <span id="MessageStar" class="glyphicon glyphicon-flag hidden" style="color:red "></span>
+                        </a>
+                        <ul class="dropdown-menu">
 
+                            <li>@Html.ActionLink("Inbox", "Index", "UMessages")</li>
+                            <li>@Html.ActionLink("Outbox", "OutIndex", "UMessages")</li>
+
+
+                        </ul>
+
+                    </li>
                     <li class="dropdown">
 
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -87,7 +99,7 @@
                     </li>
                 </ul>
 
-               
+
             </li>
 
         </ul>

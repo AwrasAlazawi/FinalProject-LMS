@@ -3,7 +3,7 @@ namespace FinalProject_LMS.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class intiate : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {

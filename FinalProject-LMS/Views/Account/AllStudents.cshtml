@@ -12,7 +12,7 @@
         {
             <ul class="nav navbar-nav">
                 <li>@Html.TextBox("searchName", null, new { @Placeholder = "Name.." })</li>
-                <li><input type="submit" value="Search" class=" btn btn-primary "/></li>
+                <li><input type="submit" value="Search" class=" btn btn-primary " /></li>
             </ul>
         }
     </div>
@@ -62,14 +62,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CourseName)
                 </td>
-                
+
             </tr>
         }
 
     </table>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jqueryval")
-
+    @Scripts.Render("~/bundles/message")
 }

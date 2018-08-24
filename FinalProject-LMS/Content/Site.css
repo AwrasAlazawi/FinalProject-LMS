@@ -69,3 +69,10 @@ input, select, textarea {
     height: 40px;
     border-radius: 10px;
 }
+a.my-class {
+    color: red;
+}
+
+span.My-message {
+    color: red;
+}

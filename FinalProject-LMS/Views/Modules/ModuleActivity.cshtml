@@ -67,6 +67,10 @@
 
     </table>
     <div>
-        @Html.ActionLink("Back to Modules", "CourseModule", "Courses", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
+        @Html.ActionLink("Back to Courses", "CourseModule", "Courses", new { id = Url.RequestContext.RouteData.Values["id"] }, null)
     </div>
 </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/message")
+}

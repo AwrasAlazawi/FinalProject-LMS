@@ -3,8 +3,9 @@
    
   
     $("#EndDate").on("change", OnChange);
-    $("#StartDate").on("change", OnChange);
-    $("#CreateButton").on("change", OnClick);
+    $("#StartDate").on("change", OnChange); 
+  
+    $("#CreateButton").on("click", OnClick);
     $("input[type='submit']").on("click", OnClick);
 });
 function OnChange(e) {
@@ -13,10 +14,12 @@ function OnChange(e) {
     var endDate = document.getElementById("EndDate").value;
     if (startDate < courseStartDate) {
         $("#warningTextForCourseStartDate").removeClass("hidden");
+    
 
     }
     else {
         $("#warningTextForCourseStartDate").addClass("hidden");
+       
     }
    if (startDate < endDate) {
         $("#warningText").addClass("hidden");
@@ -32,11 +35,10 @@ function OnChange(e) {
 }
 
 function OnClick(e) {
-    if (!$("#warningText").hasClass("hidden") || !$("#warningTextForCourseStartDate").hasClass("hidden")) {
+    if (!$("#warningText").hasClass("hidden") || !$("#warningTextForCourseStartDate").hasClass("hidden")  ) {
         e.preventDefault();
     }
 
-   
 
 
 }
